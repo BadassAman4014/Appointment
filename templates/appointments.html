@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Appointments</title>
+  <style>
+    /* General reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fbfc;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+
+    /* Header styles */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .controls select, .controls button {
+      padding: 5px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .slider-container label {
+      font-size: 14px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tabs button {
+      flex: 1;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f3f4f6;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tabs button:hover {
+      background-color: #e0e7ff;
+    }
+
+    .tabs button.active {
+      background-color: #007bff;
+      color: #fff;
+      border-color: #007bff;
+    }
+
+    /* Schedule table */
+    .schedule-container {
+      overflow-x: auto;
+      border-radius: 10px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .schedule {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+
+    .schedule thead th {
+      position: sticky;
+      top: 0;
+      background-color: #f3f4f6;
+      z-index: 2;
+    }
+
+    .schedule th, .schedule td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #e6e6e6;
+    }
+
+    .schedule th {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .schedule td {
+      font-size: 14px;
+      position: relative;
+      height: 60px;
+    }
+
+    .schedule tr:nth-child(odd) td {
+      background-color: #f9fbfc;
+    }
+
+    .schedule tr:hover td {
+      background-color: #f1f5f9;
+    }
+
+    .event {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      padding: 5px;
+      font-size: 12px;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .event:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+
+    .event.emergency { background-color: #ff5b5b; }
+    .event.examination { background-color: #5bbcff; }
+    .event.consultation { background-color: #50d890; }
+    .event.routine-checkup { background-color: #d1a4ff; }
+    .event.sick-visit { background-color: #ffc65b; }
+
+    /* Legend */
+    .legend {
+      display: flex;
+      justify-content: space-around;
+      margin-top: 20px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-item span {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+    }
+
+    .legend-item .emergency { background-color: #ff5b5b; }
+    .legend-item .examination { background-color: #5bbcff; }
+    .legend-item .consultation { background-color: #50d890; }
+    .legend-item .routine-checkup { background-color: #d1a4ff; }
+    .legend-item .sick-visit { background-color: #ffc65b; }
+
+    /* Appointments Cards */
+    .appointments-cards {
+        margin-top: 30px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Center the cards horizontally */
+        gap: 20px; /* Space between the cards */
+        padding: 0 20px; /* Optional: Padding around the cards */
+    }
+
+    /* Heading for the cards */
+    .appointments-cards h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #007bff;
+    }
+
+    /* Appointment Card Styling */
+    .appointment-card {
+        width: 1200px; /* Set the card to take up the full width of the container */
+        background-color: #fff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        display: flex;
+        flex-direction: column; /* Stack contents vertically */
+        gap: 15px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: 1px solid #e6e6e6;
+    }
+    
+      
+
+
+    .appointment-card:hover {
+      transform: translateY(-5px); /* Slight elevation effect on hover */
+    }
+
+    .appointment-card .details {
+      flex: 1;
+    }
+
+    .appointment-card h3 {
+      font-size: 18px;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    .appointment-card p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    .appointment-card .status {
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+
+    .appointment-card .severity {
+      padding: 5px 10px;
+      background-color: #ffc65b;
+      color: #fff;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+
+    .appointment-card .location {
+      font-size: 14px;
+      color: #888;
+    }
+
+    .appointment-card .description,
+    .appointment-card .previous-records {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #333;
+    }
+
+    .appointment-card .previous-records ul {
+      list-style-type: disc;
+      padding-left: 20px;
+    }
+
+    /* Initially hidden expanded info */
+    .appointment-card .expanded-info {
+      height: 0;
+      opacity: 0;
+      overflow: hidden; /* Hide content outside the container */
+      padding: 0 20px; /* Adjust padding for smoothness */
+      transition: all 0.3s ease-in-out; /* Smooth transition for height and opacity */
+    }
+    
+    /* Show expanded info on hover or click */
+    .appointment-card:hover .expanded-info,
+    .appointment-card.expanded .expanded-info {
+      height: auto;
+      opacity: 1;
+      padding: 10px 20px; /* Optional: Add padding for better visibility */
+    }
+    
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Upcoming Appointments</h1>
+      <div class="controls">
+        <select id="week-filter">
+          <option>This week: September, 28 - October, 4</option>
+        </select>
+        <select id="severity-filter">
+          <option value="all">All Severities</option>
+          <option value="High">High</option>
+          <option value="Medium">Medium</option>
+          <option value="Low">Low</option>
+        </select>
+        <div class="slider-container">
+          <label for="font-size">Font size</label>
+          <input id="font-size" type="range" min="10" max="20" step="1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Schedule -->
+    <div class="schedule-container">
+      <table class="schedule" id="schedule">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Monday, 28</th>
+            <th>Tuesday, 29</th>
+            <th>Wednesday, 30</th>
+            <th>Thursday, 1</th>
+            <th>Friday, 2</th>
+            <th>Saturday, 3</th>
+            <th>Sunday, 4</th>
+          </tr>
+        </thead>
+        <tbody id="schedule-body">
+          <!-- Rows will be dynamically generated -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+        <div class="legend-item">
+          <span class="emergency"></span> Emergency
+        </div>
+        <div class="legend-item">
+          <span class="examination"></span> Examination
+        </div>
+        <div class="legend-item">
+          <span class="consultation"></span> Consultation
+        </div>
+        <div class="legend-item">
+          <span class="routine-checkup"></span> Routine Checkup
+        </div>
+        <div class="legend-item">
+          <span class="sick-visit"></span> Sick Visit
+        </div>
+      </div>
+    </div>
+
+    <!-- Appointments Cards Section -->
+    <div class="appointments-cards" id="appointments-cards">
+      <h2>Upcoming Appointments</h2> <!-- Added Heading -->
+      <!-- Past and Upcoming appointments will be listed here dynamically -->
+    </div>
+
+  <script>
+    const tasksUrl = "tasks.json"; // Link to your JSON file
+    const scheduleBody = document.getElementById("schedule-body");
+    const appointmentsCards = document.getElementById("appointments-cards");
+    const severityFilter = document.getElementById("severity-filter");
+
+    // Adjust font size using slider
+    document.getElementById("font-size").addEventListener("input", function (e) {
+      document.body.style.fontSize = `${e.target.value}px`;
+    });
+
+    // Filter appointments based on severity
+    severityFilter.addEventListener("change", loadTasks);
+
+    // Load tasks from JSON
+    async function loadTasks() {
+      const response = await fetch(tasksUrl);
+      const data = await response.json();
+
+      // Get selected severity filter
+      const selectedSeverity = severityFilter.value;
+
+      // Clear existing rows
+      scheduleBody.innerHTML = "";
+      appointmentsCards.innerHTML = "";
+
+      // Add rows dynamically for schedule
+      data.tasks.forEach((row, index) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.time}</td>
+          ${row.events
+            .map(
+              (event) =>
+                `<td><div class="event ${event.type}">${event.name}</div></td>`
+            )
+            .join("")}
+        `;
+        scheduleBody.appendChild(tr);
+      });
+
+      // Add Appointment Cards based on severity filter
+      data.tasks.forEach((task) => {
+        task.events.forEach((event) => {
+          if (selectedSeverity === "all" || event.severity === selectedSeverity) {
+            const card = document.createElement("div");
+            card.classList.add("appointment-card");
+
+            card.innerHTML = `
+                <div class="details">
+                <h3>${event.name}</h3>
+                <p><strong>Time of Appointment:</strong> ${task.time}</p>
+                <p><strong>Booked By:</strong> John Doe (Patient)</p>
+                <p><strong>Chief Complaint:</strong> Severe pain in chest, associated with shortness of breath and dizziness.</p>
+                
+                <!-- Initially hidden details -->
+                <div class="expanded-info">
+                  <p><strong>Severity of Condition:</strong> <span class="severity">${event.severity}</span> - Urgent attention required.</p>
+                  <p><strong>Location:</strong> Clinic 101, Room 5, Main Hospital Building</p>
+                  <p><strong>Doctor Assigned:</strong> Dr. Smith (Cardiologist)</p>
+                  <p><strong>Consultation Type:</strong> Emergency Consultation</p>
+                  <div class="description">
+                    <p>Click to view more detailed medical history and diagnostic information.</p>
+                  </div>
+                  <div class="previous-records" style="display: none;">
+                    <h4><strong>Previous Medical Records:</strong></h4>
+                    <ul>
+                      <li><strong>Blood Pressure:</strong> 120/80 mmHg (Last recorded)</li>
+                      <li><strong>Previous Consultation:</strong> 3 months ago for routine checkup with Dr. Johnson (General Physician)</li>
+                      <li><strong>Medical History:</strong> Hypertension (Controlled with medication), Asthma (Mild symptoms)</li>
+                      <li><strong>Previous Diagnosis:</strong> None noted, but patient reports occasional chest tightness.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <span class="status">Status: Upcoming Appointment</span>
+            `;
+
+            card.addEventListener("click", () => {
+              const expandedInfo = card.querySelector(".expanded-info");
+              expandedInfo.style.display = expandedInfo.style.display === "none" ? "block" : "none";
+            });
+
+            appointmentsCards.appendChild(card);
+          }
+        });
+      });
+    }
+
+    // Initial load
+    loadTasks();
+  </script>
+</body>
+</html>

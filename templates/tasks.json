@@ -1,0 +1,380 @@
+{
+  "tasks": [
+    {
+      "time": "10:00",
+      "events": [
+        { 
+          "type": "routine-checkup", 
+          "name": "Checkup", 
+          "severity": "Low", 
+          "previousRecords": ["Annual Health Report"] 
+        },
+        { 
+          "type": "examination", 
+          "name": "ECG", 
+          "severity": "Medium", 
+          "previousRecords": ["Heart History", "Blood Pressure Monitoring"] 
+        },
+        { 
+          "type": "therapy", 
+          "name": "Physical therapy session", 
+          "severity": "Medium", 
+          "previousRecords": ["Past Physiotherapy Sessions"] 
+        },
+        { 
+          "type": "vaccination", 
+          "name": "Flu shot", 
+          "severity": "Low", 
+          "previousRecords": ["Flu Vaccine History"] 
+        },
+        { 
+          "type": "consultation", 
+          "name": "Pregnancy consultation", 
+          "severity": "Medium", 
+          "previousRecords": ["Ultrasound Reports", "Blood Test Results"] 
+        },
+        { 
+          "type": "test", 
+          "name": "X-ray of chest", 
+          "severity": "Medium", 
+          "previousRecords": ["Chest X-ray History"] 
+        },
+        { 
+          "type": "consultation", 
+          "name": "Ultrasound", 
+          "severity": "Medium", 
+          "previousRecords": ["Previous Ultrasound Reports"] 
+        }
+      ]
+    },
+    {
+      "time": "11:00",
+      "events": [
+        { 
+          "type": "surgery", 
+          "name": "Minor wound stitching", 
+          "severity": "High", 
+          "previousRecords": ["Injury Report", "Previous Wound Treatments"] 
+        },
+        { 
+          "type": "consultation", 
+          "name": "Cardiology consultation", 
+          "severity": "Medium", 
+          "previousRecords": ["Electrocardiogram (ECG)", "Cardiac History"] 
+        },
+        { 
+          "type": "test", 
+          "name": "Urine analysis", 
+          "severity": "Low", 
+          "previousRecords": ["Urine Test Results"] 
+        },
+        { 
+          "type": "counseling", 
+          "name": "Stress management session", 
+          "severity": "Low", 
+          "previousRecords": ["Mental Health History"] 
+        },
+        { 
+          "type": "vaccination", 
+          "name": "Hepatitis B vaccine", 
+          "severity": "Low", 
+          "previousRecords": ["Vaccination History"] 
+        },
+        { 
+          "type": "emergency", 
+          "name": "Broken arm treatment", 
+          "severity": "High", 
+          "previousRecords": ["X-ray Reports", "Bone Fracture History"] 
+        },
+        { 
+          "type": "consultation", 
+          "name": "Orthopedic consultation", 
+          "severity": "Medium", 
+          "previousRecords": ["Orthopedic Reports", "Joint Health History"] 
+        }
+      ]
+    },
+    {
+      "time": "12:00",
+      "events": [
+        { 
+          "type": "examination", 
+          "name": "MRI scan", 
+          "severity": "High", 
+          "previousRecords": ["Previous MRI Scans", "Neurological Assessments"] 
+        },
+        { 
+          "type": "test", 
+          "name": "Complete blood count", 
+          "severity": "Medium", 
+          "previousRecords": ["Blood Test Results"] 
+        },
+        { 
+          "type": "consultation", 
+          "name": "Nutrition consultation", 
+          "severity": "Low", 
+          "previousRecords": ["Diet History", "Blood Sugar Levels"] 
+        },
+        { 
+          "type": "surgery", 
+          "name": "Appendectomy", 
+          "severity": "High", 
+          "previousRecords": ["Abdominal X-ray", "Blood Test Results"] 
+        },
+        { 
+          "type": "counseling", 
+          "name": "Smoking cessation counseling", 
+          "severity": "Low", 
+          "previousRecords": ["Smoking History", "Nicotine Test Results"] 
+        },
+        { 
+          "type": "therapy", 
+          "name": "Occupational therapy session", 
+          "severity": "Low", 
+          "previousRecords": ["Past Therapy Sessions"] 
+        },
+        { 
+          "type": "emergency", 
+          "name": "Severe allergic reaction", 
+          "severity": "High", 
+          "previousRecords": ["Allergy Test History", "EpiPen Usage"] 
+        }
+      ]
+    },
+    {
+      "time": "13:00",
+      "events": [
+        { 
+          "type": "consultation", 
+          "name": "General health consultation", 
+          "severity": "Low", 
+          "previousRecords": ["General Health History", "Routine Checkups"] 
+        },
+        { 
+          "type": "test", 
+          "name": "Blood pressure monitoring", 
+          "severity": "Low", 
+          "previousRecords": ["Previous Blood Pressure Readings"] 
+        },
+        { 
+          "type": "counseling", 
+          "name": "Mental health counseling", 
+          "severity": "Medium", 
+          "previousRecords": ["Mental Health Assessments", "Therapy Records"] 
+        },
+        { 
+          "type": "therapy", 
+          "name": "Speech therapy session", 
+          "severity": "Low", 
+          "previousRecords": ["Speech Therapy History"] 
+        },
+        { 
+          "type": "vaccination", 
+          "name": "Polio vaccine", 
+          "severity": "Low", 
+          "previousRecords": ["Polio Vaccination History"] 
+        },
+        { 
+          "type": "consultation", 
+          "name": "Pediatric consultation", 
+          "severity": "Medium", 
+          "previousRecords": ["Child's Health History", "Vaccination History"] 
+        },
+        { 
+          "type": "examination", 
+          "name": "Eye examination", 
+          "severity": "Low", 
+          "previousRecords": ["Previous Eye Exams", "Vision Test Results"] 
+        }
+      ]
+    },
+    {
+      "time": "14:00",
+      "events": [
+        { 
+          "type": "routine-checkup", 
+          "name": "Routine heart checkup", 
+          "severity": "Low", 
+          "previousRecords": ["Cardiovascular Health Reports", "Heart Disease History"] 
+        },
+        { 
+          "type": "counseling", 
+          "name": "Family planning counseling", 
+          "severity": "Low", 
+          "previousRecords": ["Family Planning History"] 
+        },
+        { 
+          "type": "test", 
+          "name": "Liver function test", 
+          "severity": "Medium", 
+          "previousRecords": ["Liver Function Test History"] 
+        },
+        { 
+          "type": "surgery", 
+          "name": "Tonsillectomy", 
+          "severity": "Medium", 
+          "previousRecords": ["Previous Throat Issues", "Tonsil Infections"] 
+        },
+        { 
+          "type": "therapy", 
+          "name": "Cognitive therapy session", 
+          "severity": "Low", 
+          "previousRecords": ["Mental Health History", "Therapy Records"] 
+        },
+        { 
+          "type": "consultation", 
+          "name": "Dermatology consultation", 
+          "severity": "Medium", 
+          "previousRecords": ["Skin Health History", "Previous Dermatology Consultations"] 
+        },
+        { 
+          "type": "emergency", 
+          "name": "Asthma attack treatment", 
+          "severity": "High", 
+          "previousRecords": ["Asthma History", "Inhaler Usage"] 
+        }
+      ]
+    },
+    {
+      "time": "15:00",
+      "events": [
+        { 
+          "type": "examination", 
+          "name": "Bone density scan", 
+          "severity": "Medium", 
+          "previousRecords": ["Bone Health History", "Osteoporosis Tests"] 
+        },
+        { 
+          "type": "test", 
+          "name": "Thyroid function test", 
+          "severity": "Medium", 
+          "previousRecords": ["Thyroid Test Results"] 
+        },
+        { 
+          "type": "consultation", 
+          "name": "Neurology consultation", 
+          "severity": "High", 
+          "previousRecords": ["Neurological History", "Brain Scans"] 
+        },
+        { 
+          "type": "vaccination", 
+          "name": "Rabies vaccine", 
+          "severity": "Low", 
+          "previousRecords": ["Rabies Vaccination History"] 
+        },
+        { 
+          "type": "counseling", 
+          "name": "Weight loss counseling", 
+          "severity": "Low", 
+          "previousRecords": ["Weight Loss History", "Dietary Reports"] 
+        },
+        { 
+          "type": "therapy", 
+          "name": "Hydrotherapy session", 
+          "severity": "Low", 
+          "previousRecords": ["Physical Therapy Reports"] 
+        },
+        { 
+          "type": "emergency", 
+          "name": "Head injury treatment", 
+          "severity": "High", 
+          "previousRecords": ["Previous Head Injuries", "CT Scan Results"] 
+        }
+      ]
+    },
+    {
+      "time": "16:00",
+      "events": [
+        { 
+          "type": "consultation", 
+          "name": "Endocrinology consultation", 
+          "severity": "Medium", 
+          "previousRecords": ["Endocrine Health Reports"] 
+        },
+        { 
+          "type": "test", 
+          "name": "Kidney function test", 
+          "severity": "Medium", 
+          "previousRecords": ["Kidney Function Test History"] 
+        },
+        { 
+          "type": "therapy", 
+          "name": "Group therapy session", 
+          "severity": "Low", 
+          "previousRecords": ["Mental Health Therapy"] 
+        },
+        { 
+          "type": "vaccination", 
+          "name": "Tetanus shot", 
+          "severity": "Low", 
+          "previousRecords": ["Tetanus Immunization History"] 
+        },
+        { 
+          "type": "routine-checkup", 
+          "name": "Hearing test", 
+          "severity": "Low", 
+          "previousRecords": ["Audiometry Reports"] 
+        },
+        { 
+          "type": "counseling", 
+          "name": "Career counseling session", 
+          "severity": "Low", 
+          "previousRecords": ["Career History"] 
+        },
+        { 
+          "type": "emergency", 
+          "name": "Severe burn treatment", 
+          "severity": "High", 
+          "previousRecords": ["Burn History", "Burn Treatment"] 
+        }
+      ]
+    },
+    {
+      "time": "17:00",
+      "events": [
+        { 
+          "type": "consultation", 
+          "name": "Gastroenterology consultation", 
+          "severity": "Medium", 
+          "previousRecords": ["Digestive Health Reports"] 
+        },
+        { 
+          "type": "test", 
+          "name": "Allergy test", 
+          "severity": "Low", 
+          "previousRecords": ["Allergy Test History"] 
+        },
+        { 
+          "type": "therapy", 
+          "name": "Rehabilitation therapy", 
+          "severity": "Medium", 
+          "previousRecords": ["Rehabilitation Reports"] 
+        },
+        { 
+          "type": "counseling", 
+          "name": "Grief counseling session", 
+          "severity": "Low", 
+          "previousRecords": ["Grief History", "Therapy Sessions"] 
+        },
+        { 
+          "type": "vaccination", 
+          "name": "Covid-19 booster shot", 
+          "severity": "Low", 
+          "previousRecords": ["Covid-19 Vaccine History"] 
+        },
+        { 
+          "type": "routine-checkup", 
+          "name": "Annual health checkup", 
+          "severity": "Low", 
+          "previousRecords": ["Annual Health Report"] 
+        },
+        { 
+          "type": "emergency", 
+          "name": "Chest pain treatment", 
+          "severity": "High", 
+          "previousRecords": ["Heart Disease History", "ECG Reports"] 
+        }
+      ]
+    }
+  ]
+}

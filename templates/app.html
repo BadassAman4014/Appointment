@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Appointments</title>
+  <style>
+    /* General reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9fbfc;
+      color: #333;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 10px;
+    }
+
+    /* Header styles */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .controls select, .controls button {
+      padding: 5px 10px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      cursor: pointer;
+    }
+
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .slider-container label {
+      font-size: 14px;
+    }
+
+    /* Tabs */
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tabs button {
+      flex: 1;
+      padding: 10px;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #f3f4f6;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .tabs button:hover {
+      background-color: #e0e7ff;
+    }
+
+    .tabs button.active {
+      background-color: #007bff;
+      color: #fff;
+      border-color: #007bff;
+    }
+
+    /* Schedule table */
+    .schedule-container {
+      overflow-x: auto;
+      border-radius: 10px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .schedule {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+    }
+
+    .schedule thead th {
+      position: sticky;
+      top: 0;
+      background-color: #f3f4f6;
+      z-index: 2;
+    }
+
+    .schedule th, .schedule td {
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #e6e6e6;
+    }
+
+    .schedule th {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    .schedule td {
+      font-size: 14px;
+      position: relative;
+      height: 60px;
+    }
+
+    .schedule tr:nth-child(odd) td {
+      background-color: #f9fbfc;
+    }
+
+    .schedule tr:hover td {
+      background-color: #f1f5f9;
+    }
+
+    .event {
+      position: absolute;
+      top: 5px;
+      left: 5px;
+      right: 5px;
+      padding: 5px;
+      font-size: 12px;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .event:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+
+    .event.emergency { background-color: #ff5b5b; }
+    .event.examination { background-color: #5bbcff; }
+    .event.consultation { background-color: #50d890; }
+    .event.routine-checkup { background-color: #d1a4ff; }
+    .event.sick-visit { background-color: #ffc65b; }
+
+    /* Month view */
+    .month-view {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+
+    .month-day {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      text-align: left;
+    }
+
+    .month-day h3 {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    /* Day view */
+    .day-view {
+      display: grid;
+      grid-template-rows: repeat(10, 1fr);
+      gap: 10px;
+    }
+
+    .day-slot {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #fff;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <h1>Upcoming Appointments</h1>
+      <div class="controls">
+        <select>
+          <option>This week: September, 28 - October, 4</option>
+        </select>
+        <div class="slider-container">
+          <label for="font-size">Font size</label>
+          <input id="font-size" type="range" min="10" max="20" step="1">
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="tabs">
+      <button class="tab-btn" data-view="month">Month</button>
+      <button class="tab-btn active" data-view="week">Week</button>
+      <button class="tab-btn" data-view="day">Day</button>
+    </div>
+
+    <!-- Schedule -->
+    <div class="schedule-container week-view" id="schedule-container">
+      <table class="schedule" id="schedule">
+        <thead>
+          <tr>
+            <th>Time</th>
+            <th>Monday, 28</th>
+            <th>Tuesday, 29</th>
+            <th>Wednesday, 30</th>
+            <th>Thursday, 1</th>
+            <th>Friday, 2</th>
+            <th>Saturday, 3</th>
+            <th>Sunday, 4</th>
+          </tr>
+        </thead>
+        <tbody id="schedule-body">
+          <!-- Rows will be dynamically generated -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Month view -->
+    <div class="month-view" id="month-view" style="display: none;"></div>
+
+    <!-- Day view -->
+    <div class="day-view" id="day-view" style="display: none;"></div>
+  </div>
+
+  <script>
+    const tasksUrl = "tasks.json";
+    const scheduleBody = document.getElementById("schedule-body");
+    const monthView = document.getElementById("month-view");
+    const dayView = document.getElementById("day-view");
+    const scheduleContainer = document.getElementById("schedule-container");
+
+    // Adjust font size using slider
+    document.getElementById("font-size").addEventListener("input", function (e) {
+      document.body.style.fontSize = `${e.target.value}px`;
+    });
+
+    // Switch between tabs
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", function () {
+        document.querySelector(".tab-btn.active").classList.remove("active");
+        btn.classList.add("active");
+
+        const view = btn.dataset.view;
+        switchView(view);
+      });
+    });
+
+    function switchView(view) {
+      scheduleContainer.style.display = view === "week" ? "block" : "none";
+      monthView.style.display = view === "month" ? "grid" : "none";
+      dayView.style.display = view === "day" ? "grid" : "none";
+      if (view === "month") loadMonthView();
+      if (view === "day") loadDayView();
+    }
+
+    // Load tasks for the week view
+    async function loadTasks() {
+      const response = await fetch(tasksUrl);
+      const data = await response.json();
+
+      scheduleBody.innerHTML = "";
+      data.tasks.forEach((row) => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.time}</td>
+          ${row.events
+            .map(
+              (event) =>
+                `<td><div class="event ${event.type}">${event.name}</div></td>`
+            )
+            .join("")}
+        `;
+        scheduleBody.appendChild(tr);
+      });
+    }
+
+    // Load tasks for the month view
+    async function loadMonthView() {
+      const response = await fetch(tasksUrl);
+      const data = await response.json();
+      const days = data.month;
+
+      monthView.innerHTML = "";
+      days.forEach((day) => {
+        const div = document.createElement("div");
+        div.classList.add("month-day");
+        div.innerHTML = `
+          <h3>${day.date}</h3>
+          ${day.events
+            .map((event) => `<div class="event ${event.type}">${event.name}</div>`)
+            .join("")}
+        `;
+        monthView.appendChild(div);
+      });
+    }
+
+    // Load tasks for the day view
+    async function loadDayView() {
+      const response = await fetch(tasksUrl);
+      const data = await response.json();
+      const day = data.day;
+
+      dayView.innerHTML = "";
+      day.forEach((slot) => {
+        const div = document.createElement("div");
+        div.classList.add("day-slot");
+        div.innerHTML = `
+          <h3>${slot.time}</h3>
+          ${slot.events
+            .map((event) => `<div class="event ${event.type}">${event.name}</div>`)
+            .join("")}
+        `;
+        dayView.appendChild(div);
+      });
+    }
+
+    // Initial load
+    loadTasks();
+  </script>
+</body>
+</html>
